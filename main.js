@@ -12,7 +12,10 @@ const player1 = {
 	],
 	attack: function() {
 		console.log(`${this.name} Fight...`);
-	}
+	},
+	changeHP: changeHP,
+	elHP: elHP,
+	renderHP: renderHP
 };
 
 const player2 = {
@@ -26,7 +29,10 @@ const player2 = {
 	],
 	attack: function() {
 		console.log(`${this.name} Fight...`);
-	}
+	},
+	changeHP: changeHP,
+	elHP: elHP,
+	renderHP: renderHP
 };
 
 function createElement(tag, className) {
@@ -66,15 +72,22 @@ function getRandomNumber(min, max) {
 	return Math.round(Math.random() * range) + min;
 }
 
-function changeHP(player, damage) {
-	player.hp -= damage;
+function changeHP(damage) {
+	this.hp -= damage;
 
-	if (player.hp <= 0) {
-		player.hp = 0;
+	if (this.hp <= 0) {
+		this.hp = 0;
 	}
+}
 
-	const $playerLife = document.querySelector('.player' + player.player + ' .life');
-	$playerLife.style.width = `${player.hp}%`;
+function elHP() {
+	const $elemHP = document.querySelector(`.player${this.player} .life`);
+
+	return $elemHP;
+}
+
+function renderHP() {
+	this.elHP().style.width = `${this.hp}%`;
 }
 
 function createResultTitle(name) {
@@ -94,8 +107,11 @@ function disableRandomButton() {
 }
 
 $buttonRandom.addEventListener('click', function() {
-	changeHP(player1, getRandomNumber(0, 20));
-	changeHP(player2, getRandomNumber(0, 20));
+	player1.changeHP(getRandomNumber(0, 20));
+	player2.changeHP(getRandomNumber(0, 20));
+
+	player1.renderHP();
+	player2.renderHP();
 
 	if (player1.hp === 0 || player2.hp === 0) {
 		disableRandomButton();
