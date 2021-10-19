@@ -73,26 +73,18 @@ function changeHP(player, damage) {
 		player.hp = 0;
 	}
 
-	$playerLife = document.querySelector('.player' + player.player + ' .life');
+	const $playerLife = document.querySelector('.player' + player.player + ' .life');
 	$playerLife.style.width = `${player.hp}%`;
 }
 
-function getResult(player1, player2) {
-	if (player1.hp === 0 && player2.hp === 0) {
-		createResultTitle('tie');
-		disableRandomButton();
-	} else if (player1.hp === 0) {
-		createResultTitle(`${player2.name} wins`);
-		disableRandomButton();
-	} else if (player2.hp === 0) {
-		createResultTitle(`${player1.name} wins`);
-		disableRandomButton();
-	}
-}
-
-function createResultTitle(resultName) {
+function createResultTitle(name) {
 	const $resultTitle = createElement('div', 'resultTitle');
-	$resultTitle.innerText = resultName;
+
+	if (name) {
+		$resultTitle.innerText = `${name} wins`;
+	} else {
+		$resultTitle.innerText = 'draw'
+	}
 
 	$arenas.appendChild($resultTitle);
 }
@@ -105,7 +97,17 @@ $buttonRandom.addEventListener('click', function() {
 	changeHP(player1, getRandomNumber(0, 20));
 	changeHP(player2, getRandomNumber(0, 20));
 
-	getResult(player1, player2);
+	if (player1.hp === 0 || player2.hp === 0) {
+		disableRandomButton();
+	}
+
+	if (player1.hp === 0 && player2.hp === 0) {
+		createResultTitle();
+	} else if (player1.hp === 0 && player1.hp < player2.hp) {
+		createResultTitle(player2.name);
+	} else if (player2.hp === 0 && player2.hp < player1.hp) {
+		createResultTitle(player1.name);
+	}
 });
 
 $arenas.appendChild(createPlayer(player1));
