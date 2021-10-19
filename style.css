@@ -257,9 +257,14 @@ body {
 }
 .button:active {
 	top: 2px;
+	background-color: #ffd905;
 }
 .button:active::after {
 	top: 1px;
+}
+.button:disabled {
+	background-color: #b1b1b1;
+	cursor: default;
 }
 
 .resultTitle {
@@ -272,4 +277,16 @@ body {
 	z-index: 1000;
 	color: white;
 	font-family: "Mortal Kombat 3";
+}
+
+.reloadWrap {
+    position: absolute;
+    top: 10%;
+    z-index: 1000;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.reloadWrap .button {
+    margin-top: 0;
 }
