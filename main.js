@@ -81,9 +81,7 @@ function changeHP(damage) {
 }
 
 function elHP() {
-	const $elemHP = document.querySelector(`.player${this.player} .life`);
-
-	return $elemHP;
+	return document.querySelector(`.player${this.player} .life`);
 }
 
 function renderHP() {
@@ -99,11 +97,26 @@ function createResultTitle(name) {
 		$resultTitle.innerText = 'draw'
 	}
 
-	$arenas.appendChild($resultTitle);
+	return $resultTitle;
 }
 
 function disableRandomButton() {
 	$buttonRandom.disabled = true;
+}
+
+function createReloadButton() {
+	const $reloadButton = createElement('button', 'button');
+	const $reloadButtonWrapper = createElement('div', 'reloadWrap');
+
+	$reloadButton.setAttribute('type', 'button');
+	$reloadButton.innerText = 'Restart';
+	$reloadButton.addEventListener('click', function() {
+		window.location.reload();
+	});
+
+	$reloadButtonWrapper.appendChild($reloadButton);
+
+	return $reloadButtonWrapper;
 }
 
 $buttonRandom.addEventListener('click', function() {
@@ -115,14 +128,16 @@ $buttonRandom.addEventListener('click', function() {
 
 	if (player1.hp === 0 || player2.hp === 0) {
 		disableRandomButton();
+
+		$arenas.appendChild(createReloadButton());
 	}
 
 	if (player1.hp === 0 && player2.hp === 0) {
-		createResultTitle();
+		$arenas.appendChild(createResultTitle());
 	} else if (player1.hp === 0 && player1.hp < player2.hp) {
-		createResultTitle(player2.name);
+		$arenas.appendChild(createResultTitle(player2.name));
 	} else if (player2.hp === 0 && player2.hp < player1.hp) {
-		createResultTitle(player1.name);
+		$arenas.appendChild(createResultTitle(player1.name));
 	}
 });
 
