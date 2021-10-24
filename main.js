@@ -214,7 +214,7 @@ function makeKick(playerKick, playerDefence, playerKickAttack, playerDefenceAtta
 
 function generateLog(type, player1, player2, damage) {
 	const date = new Date();
-	const time = `${date.getHours()}:${date.getMinutes()}`;
+	const time = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 	let text;
 	let randomLogNumber;
 
