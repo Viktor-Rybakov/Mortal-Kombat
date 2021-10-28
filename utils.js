@@ -35,8 +35,7 @@ export const createReloadButton= () => {
 	return $reloadButtonWrapper;
 }
 
-export const createPlayer = (playerObj) => {
-	const { player, hp, name, img } = playerObj;
+export const createPlayer = ({ player, hp, name, img }) => {
 
 	const $player = createElement('div', 'player' + player);
 	const $progressbar = createElement('div', 'progressbar');
