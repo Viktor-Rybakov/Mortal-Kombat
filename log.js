@@ -1,6 +1,4 @@
-import {getRandomNumber} from './commonUtils.js';
-
-const $chat = document.querySelector('.chat');
+import { getRandomNumber, getCurrentTime } from './utils.js';
 
 const LOGS = {
 	start: 'Часы показывали [time], когда [player1] и [player2] бросили вызов друг другу.',
@@ -43,14 +41,13 @@ const LOGS = {
 };
 
 export function generateLog(type, player1, player2, damage) {
+	const $chat = document.querySelector('.chat');
+
 	const { start, end, hit, defence, draw } = LOGS;
 	const { name: namePlayer1 } = player1;
 	const { name: namePlayer2, hp: hpPlayer2 } = player2;
 
-	const date = new Date();
-	const hours = date.getHours().toString().padStart(2, '0');
-	const minutes = date.getMinutes().toString().padStart(2, '0');
-	const time = `${hours}:${minutes}`;
+	const time = getCurrentTime();
 
 	let text;
 	let randomLogNumber;
@@ -58,18 +55,16 @@ export function generateLog(type, player1, player2, damage) {
 
 	switch(type) {
 		case 'start':
-			text = start.replace('[time]', time)
+			log = start.replace('[time]', time)
 									.replace('[player1]', namePlayer1)
 									.replace('[player2]', namePlayer2);
-			log = text;
 			break;
 
 		case 'end':
 			randomLogNumber = getRandomNumber(0, end.length - 1);
-			text = end[randomLogNumber]
+			log = end[randomLogNumber]
 							.replace('[playerWins]', namePlayer1)
 							.replace('[playerLose]', namePlayer2);
-			log = text;
 			break;
 
 		case 'hit':
